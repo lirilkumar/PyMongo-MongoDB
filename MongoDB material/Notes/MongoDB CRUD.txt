@@ -1,0 +1,212 @@
+﻿Mongodb 
+open-source document database
+leading NoSQL database
+written in C++
+
+----------------------------------------------------------------------------
+RDBMS		vs	MongoDB
+----------------------------------------------------------------------------
+Database		Database
+Table			Collection
+Tuple/Row		Document
+column			Field
+Table Join		Embedded Documents
+Primary Key		Primary Key (Default key _id provided by mongodb itself)
+
+----------------------------------------------------------------------------
+
+0.0
+setup mongodb in local system
+
+0.1
+hwo to run mongodb server
+
+0.2
+hwo to use local mongo
+
+----------------------------------------------------------------------------
+
+1. create db
+use school
+
+2.
+show dbs
+
+3.
+use school
+db.dropDatabase()
+
+
+4. 
+db.createCollection('class_10A',{ size : 6142800, max : 10000 })
+
+5.
+show collections
+
+6.
+db.class_10A.drop()
+
+----------------------------------------------------------------------------
+
+7.
+MongoDB supports many datatypes. Some of them are −
+String 
+Integer
+Boolean
+Double
+Min/ Max keys
+Arrays
+Timestamp 
+Object 
+Null
+Symbol
+Date 
+Object ID
+Binary data
+Code
+Regular expression
+
+----------------------------------------------------------------------------
+
+8.
+db.class_10A.insert([
+	{
+		student_name:'harshpreet',age:30,gender:'F',city:'chandigadh'
+	}
+])
+
+db.class_10A.insert([
+	{
+		student_name:'harshpreet',age:30,gender:'F'
+	}
+])
+
+db.class_10A.insert([
+	{
+		student_name:'harshpreet',age:30,gender:'F',city:'chandigadh'
+	},
+	{
+		student_name:'sulthan',age:28,gender:'M',city:'Mysore'
+	},
+	{
+		student_name:'nawal',age:35,gender:'F',city:'Pune'
+	}
+])
+
+
+----------------------------------------------------------------------------
+
+9.
+db.class_10A.find()
+
+10.
+db.class_10A.find().pretty()
+
+11.
+db.class_10A.find().pretty().limit(1)
+
+12.
+db.class_10A.findOne()
+
+
+13.
+db.class_10A.find({gender:'F'}).pretty()
+db.class_10A.find({gender:'F'}).pretty().skip(1)
+
+db.class_10A.find({gender:'M'}).pretty()
+
+
+14.
+db.class_10A.find({gender:'F',age:{$gt:30}}).pretty()
+db.class_10A.find({gender:'F',age:{$lt:35,$gt:29}}).pretty()
+db.class_10A.find({gender:'F',age:{$lte:35,$gt:29}}).pretty()
+
+db.class_10A.find({gender:'F'},{student_name:1,_id:0,age:1}).pretty()
+db.class_10A.find({},{student_name:1,_id:0,age:1}).pretty()
+
+15.
+db.class_10A.find({
+		$and:
+			[
+				{gender:'F'},
+				{age:{$gte:30}}
+			]
+}).pretty()
+
+16.
+db.class_10A.find({
+		$or:
+			[
+				{gender:'F'},
+				{age:{$lte:30}}
+			]
+}).pretty()
+
+----------------------------------------------------------------------------
+
+17.
+db.class_10A.update({student_name:'harshpreet'},{$set:{age:26}})
+db.class_10A.find().pretty()
+
+----------------------------------------------------------------------------
+
+18.
+db.class_10A.remove({student_name:'nawal'},1)
+db.class_10A.remove()
+
+db.class_10A.find().pretty()
+
+
+----------------------------------------------------------------------------
+
+19.
+db.class_10A.find({}).sort({age:-1}).pretty()
+db.class_10A.find({}).sort({age:1}).pretty()
+db.class_10A.find({}).sort({_id:-1}).pretty()
+
+
+19.1
+db.class_10A.find({city:{$regex:"cha.*"}}).pretty()
+db.class_10A.find({student_name:{$regex:".*s.*"}}).pretty()
+
+
+----------------------------------------------------------------------------
+
+20.
+db.class_10A.aggregate([{$group : {_id : "$gender", records : {$sum : 1}}}])
+db.class_10A.aggregate([{$group : {_id : "$gender", sum_of_age : {$sum : "$age"}}}])
+db.class_10A.aggregate([{$group : {_id : "$gender", avg : {$avg : "$age"}}}])
+db.class_10A.aggregate([{$group : {_id : "$gender", min : {$min : "$age"}}}])
+db.class_10A.aggregate([{$group : {_id : "$gender", max : {$max : "$age"}}}])
+db.class_10A.aggregate([{$group : {_id : "$gender", first : {$first : "$age"}}}])
+db.class_10A.aggregate([{$group : {_id : "$gender", last : {$last : "$age"}}}])
+
+
+----------------------------------------------------------------------------
+
+20.1
+db.class_10A.ensureIndex({student_name:1})
+
+----------------------------------------------------------------------------
+
+21.
+Start your mongod server. Assuming that your mongod server is running on the localhost and port 27017, 
+open a command prompt and go to the bin directory of your mongodb instance and type the command mongodump
+
+mongodump  --out D:\
+
+
+22.
+To restore backup data MongoDB's mongorestore command is used. 
+This command restores all of the data from the backup directory.
+
+>mongorestore
+
+
+----------------------------------------------------------------------------
+
+
+23. Java + MongoDB
+https://www.tutorialspoint.com/mongodb/mongodb_java.htm
+
+----------------------------------------------------------------------------

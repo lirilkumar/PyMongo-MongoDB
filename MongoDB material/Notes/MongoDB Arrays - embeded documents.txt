@@ -1,0 +1,63 @@
+								ARRAY OF EMBEDDED DOCUMENTS
+===================================================================================
+$elemMatch
+____________________________________________________________________________________
+DATA
+
+db.inventory.insertMany( [
+   { item: "journal", instock: [ { warehouse: "A", qty: 5 }, { warehouse: "C", qty: 15 } ] },
+   { item: "notebook", instock: [ { warehouse: "C", qty: 5 } ] },
+   { item: "paper", instock: [ { warehouse: "A", qty: 60 }, { warehouse: "B", qty: 15 } ] },
+   { item: "planner", instock: [ { warehouse: "A", qty: 40 }, { warehouse: "B", qty: 5 } ] },
+   { item: "postcard", instock: [ { warehouse: "B", qty: 15 }, { warehouse: "C", qty: 35 } ] }
+]);
+db.inventory.find({ },{'_id':0,'instock.qty':1}).pretty()
+____________________________________________________________________________________
+QUERY FOR A SINGLE DOCUMENT NESTED IN AN ARRAY
+
+	--------------------------------------------------------------------------------
+	EXACT ATLEAST 1 SAME MATCH WITH ALL FIELDS
+	WITH SAME ORDER OF FIELDS IN DOCUMENT WHICH IS BEING COMPARED
+	
+		db.inventory.find( { "instock": { warehouse: "A", qty: 5 } } )
+	--------------------------------------------------------------------------------
+	THIS WILL NOT RETURN ANY DOCUMENT AS ORDER IS NOT MATCHING
+		db.inventory.find( { "instock": { qty: 5, warehouse: "A" } } )
+
+____________________________________________________________________________________
+SPECIFY A QUERY CONDITION ON A FIELD IN AN ARRAY OF DOCUMENTS
+
+	--------------------------------------------------------------------------------
+	CONDITION ON A FIELD
+		db.inventory.find( { 'instock.qty': { $lte: 20 } } )
+
+	--------------------------------------------------------------------------------
+	ATLEAST ONE OR MANY DOCUMENT WHICH SASTISFY ALL CONDITIONED
+		db.inventory.find({ 'instock.qty': { $lte:40,$gte:15} },{'_id':0,'instock.qty':1}).pretty()
+
+____________________________________________________________________________________
+USE THE ARRAY INDEX TO QUERY FOR A FIELD IN THE EMBEDDED DOCUMENT
+
+	ONLY FIRST DOCUMENT IN ARRAY WCHICH SATISFY ALL CONDITIONS
+	db.inventory.find({ 'instock.0.qty': { $lte:5,$gte:5} },{'_id':0,'instock.qty':1}).pretty()
+
+____________________________________________________________________________________
+A SINGLE NESTED DOCUMENT MEETS MULTIPLE QUERY CONDITIONS ON NESTED FIELDS
+	
+	AT LEAST ONE EMBEDDED DOCUMENT SATISFIES ALL THE SPECIFIED CRITERIA.
+		db.inventory.find( { "instock": { $elemMatch: { qty: 5, warehouse: "A" } } } )
+
+	ATLEAST ONE SINGLE DOCUMENT WITH QTY BETWEEN 10 AND 20, WAREHOUSE IS 'B'
+		db.inventory.find( { "instock": { $elemMatch: { qty: { $gt: 10, $lte: 20 }, warehouse : "B" } } } ) . pretty()
+	
+	ATLEAST ONE DOCUMENT WITH INSTOCK.WAREHOUSE AS 'A' OR INSTOCK.QTY ==5
+		db.inventory.find( { "instock.qty": 5, "instock.warehouse": "A" } )
+	
+	USING REGEX ON OTHER FIEDS
+		db.inventory.find( {"item":{$regex:/p.*/} ,"instock.qty": 5, "instock.warehouse": "A" } ).pretty()____________________________________________________________________________________
+____________________________________________________________________________________
+	
+
+	
+	
+	

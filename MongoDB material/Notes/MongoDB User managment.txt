@@ -1,0 +1,28 @@
+﻿https://docs.mongodb.com/manual/reference/command/nav-user-management/
+
+createUser
+Creates a new user on the database where you run the command. The createUser command returns a duplicate user error if the user exists. The createUser command uses the following syntax:
+
+{ createUser: "<name>",
+  pwd: "<cleartext password>",
+  customData: { <any information> },
+  roles: [
+    { role: "<role>", db: "<database>" } | "<role>",
+    ...
+  ],
+  writeConcern: { <write concern> }
+}
+
+
+
+e.g.
+{ createUser: "Liril",
+  pwd: "Liril123",
+  customData: { age:25,lastname:'Bhanushali' },
+  roles: [
+    { role: "clusterAdmin", db: "school" },
+	 "readWrite",
+  ],
+  writeConcern: { w: "majority" , wtimeout: 5000 }
+}
+

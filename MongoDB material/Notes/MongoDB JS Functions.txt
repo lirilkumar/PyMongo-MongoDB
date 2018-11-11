@@ -1,0 +1,19 @@
+﻿Mongodb 
+
+> db.system.js.save({ 	
+
+		_id:'sqrtFunction', 
+		value:function(x)
+			{
+				print('This is Liril'); 
+				return x*x*x;  
+			} 
+		})
+
+
+> db.loadServerScripts()
+> sqrtFunction(20)
+
+
+
+http://ptgmedia.pearsoncmg.com/imprint_downloads/informit/learninglabs/9780133902990/ch03.html

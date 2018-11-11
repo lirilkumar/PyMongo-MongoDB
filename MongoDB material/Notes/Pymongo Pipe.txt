@@ -1,0 +1,34 @@
+pipe = 
+	[
+		{"$match": {
+					"$and": [
+							{
+								"$or": [
+											{"signalname": "OPERATE"}, 
+											{"signalname": "STOP"}
+										]
+							}, 
+							{
+								"value": True
+							}, 
+							{
+								"enddate": {
+											"$gte": self.first_shift_start_time, 
+											"$lte": self.current_time
+										}
+							}
+						]
+					}
+		},
+		{"$group": {
+					"_id": {
+							"signal_name": "$signalname", 
+							"value": "$value", 
+							"L1Name": "$L1Name"
+							}, 
+					"count": {
+							"$sum": 1
+							}
+					}
+		}
+	]

@@ -1,0 +1,34 @@
+MongoDB Atlas
+MongoDB Compass
+PyMongo
+
+-----------------------------------------------------
+
+
+cluster0-shard-00-00-jxeqq.mongodb.net
+
+Username: m001-student
+
+Password: m001-mongodb-basics
+
+Replica Set Name: Cluster0-shard-0
+
+-----------------------------------------------------
+https://cloud.mongodb.com
+-----------------------------------------------------
+
+(create mongodb/data folder in drive where u have installed mongodb server)
+
+my atlas cluster
+mongo "mongodb+srv://cluster0-qzyoi.mongodb.net/test" --username lirilkumar
+lirilkumar
+lirilkumar01
+
+
+class cluster
+mongo "mongodb://cluster0-shard-00-00-jxeqq.mongodb.net:27017,cluster0-shard-00-01-jxeqq.mongodb.net:27017,cluster0-shard-00-02-jxeqq.mongodb.net:27017/test?replicaSet=Cluster0-shard-0" --authenticationDatabase admin --ssl --username m001-student --password m001-mongodb-basics
+C:\Users\lirilkumar.amal\Downloads\mongodb-win32-x86_64-enterprise-windows-64-4.0.0\bin\mongo "mongodb://cluster0-shard-00-00-jxeqq.mongodb.net:27017,cluster0-shard-00-01-jxeqq.mongodb.net:27017,cluster0-shard-00-02-jxeqq.mongodb.net:27017/test?replicaSet=Cluster0-shard-0" --authenticationDatabase admin --ssl --username m001-student --password m001-mongodb-basics
+
+load("loadMovieDetailsDataset.js")
+
+-----------------------------------------------------
